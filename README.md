@@ -12,7 +12,7 @@
     ·  
     <a href="https://scholar.google.com/citations?user=1ks0R04AAAAJ&hl=zh-CN"><strong>Wen Wang*</strong></a>
     ·
-    <a href="https://stan-haochen.github.io/"><strong>Hao Chen*</strong></a>
+    <a href="https://scholar.google.com/citations?user=FaOqRpcAAAAJ"><strong>Hao Chen*</strong></a>
     ·
     <a href="https://bohanzhuang.github.io/"><strong>Bohan Zhuang†</strong></a>
     ·
@@ -62,6 +62,7 @@ Many thanks for the generous help in building the project website from Minghan L
 ## Citing
 If you find our work useful, please consider citing:
 <!-- ```BibTeX
+TODO
 @inproceedings{liew2023magicedit,
     author    = {Zhen Yang, Ganggui Ding, Wen Wang, Hao Chen, Bohan Zhuang, Chunhua Shen},
     title     = {Object-aware Inversion and Reassembly for Image Editing},
