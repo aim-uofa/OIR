@@ -21,7 +21,7 @@
     *Zhejiang University&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;†Monash University
     <br>
     </br>
-        <a href="TODO1">
+        <a href="TODO">
         <img src='https://img.shields.io/badge/arxiv-OIR-blue' alt='Paper PDF'></a>
         <a href="https://aim-uofa.github.io/OIR-Diffusion/">
         <img src='https://img.shields.io/badge/Project-Website-orange' alt='Project Page'></a>
