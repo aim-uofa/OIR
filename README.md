@@ -8,7 +8,7 @@
   <p align="center">
     <a href="https://zhenyangcs.github.io/"><strong>Zhen Yang*</strong></a>
     ·
-    <a href=""><strong>Ganggui Ding*</strong></a>
+    <a href="https://github.com/dingangui"><strong>Ganggui Ding*</strong></a>
     ·  
     <a href="https://scholar.google.com/citations?user=1ks0R04AAAAJ&hl=zh-CN"><strong>Wen Wang*</strong></a>
     ·
@@ -23,7 +23,7 @@
     </br>
         <a href="TODO1">
         <img src='https://img.shields.io/badge/arxiv-OIR-blue' alt='Paper PDF'></a>
-        <a href="TODO2">
+        <a href="https://aim-uofa.github.io/OIR-Diffusion/">
         <img src='https://img.shields.io/badge/Project-Website-orange' alt='Project Page'></a>
   </p>
 </p>
@@ -63,8 +63,8 @@ Many thanks for the generous help in building the project website from Minghan L
 If you find our work useful, please consider citing:
 <!-- ```BibTeX
 @inproceedings{liew2023magicedit,
-    author    = {Liew, Jun Hao and Yan, Hanshu and Zhang, Jianfeng and Xu, Zhongcong and Feng, Jiashi},
-    title     = {MagicEdit: High-Fidelity and Temporally Coherent Video Editing},
+    author    = {Zhen Yang, Ganggui Ding, Wen Wang, Hao Chen, Bohan Zhuang, Chunhua Shen},
+    title     = {Object-aware Inversion and Reassembly for Image Editing},
     booktitle = {arXiv},
     year      = {2023}
 }
