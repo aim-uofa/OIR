@@ -61,14 +61,14 @@ Many thanks for the generous help in building the project website from Minghan L
 
 ## Citing
 If you find our work useful, please consider citing:
-<!-- ```BibTeX
-TODO
-@inproceedings{liew2023magicedit,
-    author    = {Zhen Yang, Ganggui Ding, Wen Wang, Hao Chen, Bohan Zhuang, Chunhua Shen},
-    title     = {Object-aware Inversion and Reassembly for Image Editing},
-    booktitle = {arXiv},
-    year      = {2023}
-}
-``` -->
 
+
+```BibTeX
+@article{OIR,
+  title={Object-aware Inversion and Reassembly for Image Editing},
+  author={Yang, Zhen and Ding, Ganggui and Wang, Wen and Chen, Hao and Zhuang, Bohan and Shen, Chunhua},
+  publisher={arXiv preprint arXiv:},
+  year={2023},
+}
+```
 
