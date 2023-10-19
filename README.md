@@ -21,7 +21,7 @@
     *Zhejiang University&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;†Monash University
     <br>
     </br>
-        <a href="TODO">
+        <a href="https://arxiv.org/abs/2310.12149">
         <img src='https://img.shields.io/badge/arxiv-OIR-blue' alt='Paper PDF'></a>
         <a href="https://aim-uofa.github.io/OIR-Diffusion/">
         <img src='https://img.shields.io/badge/Project-Website-orange' alt='Project Page'></a>
@@ -67,7 +67,7 @@ If you find our work useful, please consider citing:
 @article{OIR,
   title={Object-aware Inversion and Reassembly for Image Editing},
   author={Yang, Zhen and Ding, Ganggui and Wang, Wen and Chen, Hao and Zhuang, Bohan and Shen, Chunhua},
-  publisher={arXiv preprint arXiv:},
+  publisher={arXiv preprint arXiv:2310.12149},
   year={2023},
 }
 ```
