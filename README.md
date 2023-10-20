@@ -64,7 +64,7 @@ If you find our work useful, please consider citing:
 
 
 ```BibTeX
-@article{OIR,
+@article{yang2023OIR,
   title={Object-aware Inversion and Reassembly for Image Editing},
   author={Yang, Zhen and Ding, Ganggui and Wang, Wen and Chen, Hao and Zhuang, Bohan and Shen, Chunhua},
   publisher={arXiv preprint arXiv:2310.12149},
