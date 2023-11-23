@@ -38,6 +38,7 @@
 <p align="center">
   <table align="center">
     <td>
+      <img src="./imgs/OIR_result_1.png"></img>
       <img src="./imgs/OIR_result_2.png"></img>
       <img src="./imgs/OIR_result_3.png"></img>
     </td>
