@@ -25,6 +25,8 @@
         <img src='https://img.shields.io/badge/arxiv-OIR-blue' alt='Paper PDF'></a>
         <a href="https://aim-uofa.github.io/OIR-Diffusion/">
         <img src='https://img.shields.io/badge/Project-Website-orange' alt='Project Page'></a>
+        <a href="https://drive.google.com/file/d/1bGUvLsWbcPqKV171PdBXwFrrksqJ7Q_i/view">
+        <img src='https://img.shields.io/badge/Dataset-OIR--Bench-green' alt='OIR-Bench'></a>
   </p>
 </p>
 
