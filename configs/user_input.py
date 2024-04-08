@@ -1,0 +1,15 @@
+# pretrained_model = '/home/yangzhen/checkpoints/huggingface/models/StableDiffusionModels/stable-diffusion-v1-4'
+args = {}
+args['image_path'] = "example_images/experiments/multi_object_nice/multi_object_nice_0001.png"
+args['origin_prompt'] = "a cat sitting on the table next to a vase of flowers"
+args['target_prompt'] = "a tiger sitting on the table next to a bottle of grapes"
+args['guided_prompt'] = [["", " sitting on the table next to a vase of flowers"], ["a cat sitting on the table next to ", ""]]
+args['origin_change'] = ['a cat', 'a vase of flowers']
+args['prompt_change'] = ["a tiger", "a bottle of grapes"]
+args['reassembly_step'] = 10
+args['reinversion_steps'] = 10
+args['generation_image_path'] = 'results'
+args['generation_image_path_gdi'] = 'results/CandidateImages/'
+args['generation_image_path_ldi'] = 'results/OIR/'
+args['generation_image_path_ldi_mask'] = 'results/OIR/mask/'
+args['pretrained_model'] = '/home/yangzhen/checkpoints/huggingface/models/StableDiffusionModels/stable-diffusion-v1-4'
