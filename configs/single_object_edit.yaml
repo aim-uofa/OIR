@@ -1,0 +1,10 @@
+single_object:
+  image_path: "OIR-Bench/single_object/dataset/bird_0001_0.png"
+  origin_prompt: "a bird perched on a branch with white flowers" 
+  target_prompt_list: ['a ', ' perched on a branch with white flowers']
+  target_changes: ['duck', 'flamingo', 'penguin']
+  origin_prompt_mask: '/home/yangzhen/code/OIR/OIR-Bench/single_object/mask/bird_0001_0/bird.png'
+  generation_image_path: 'single_object_results'
+
+
+

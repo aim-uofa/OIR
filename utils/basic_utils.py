@@ -1,40 +1,24 @@
 import numpy as np
-import torch
-from PIL import Image, ImageDraw, ImageFont
-import cv2
-from typing import Optional, Union, Tuple, List, Callable, Dict
-from IPython.display import display
+from tqdm import trange
+import torch, cv2, os, time
 from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
-from tqdm import trange 
-import os
-import time
-
+from IPython.display import display
+from PIL import Image, ImageDraw, ImageFont
+from typing import Optional, Union, Tuple, List, Callable, Dict
 
 def text_under_image(image: np.ndarray, text: str, text_color: Tuple[int, int, int] = (0, 0, 0)):
     h, w, c = image.shape
     offset = int(h * .2)
     img = np.ones((h + offset, w, c), dtype=np.uint8) * 255
     font = cv2.FONT_HERSHEY_SIMPLEX
-    # font = ImageFont.truetype("/usr/share/fonts/truetype/noto/NotoMono-Regular.ttf", font_size)
     img[:h] = image
     textsize = cv2.getTextSize(text, font, 1, 2)[0]
     text_x, text_y = (w - textsize[0]) // 2, h + offset - textsize[1] // 2
     cv2.putText(img, text, (text_x, text_y ), font, 1, text_color, 2)
     return img
 
-
-# count = 0
-def view_images(
-        images, 
-        save_path='/home/yangzhen/code/DynamicInversion/outputs/', 
-        file_name='test.png', 
-        num_rows=1, 
-        offset_ratio=0.02,
-):
-    """
-        这段代码可用于将多个图像组合成一个大图像，方便进行可视化和比较。
-    """
+def view_images(images, save_path, file_name, num_rows=1, offset_ratio=0.02):
     if type(images) is list:
         num_empty = len(images) % num_rows
     elif images.ndim == 4:
@@ -62,23 +46,7 @@ def view_images(
         os.makedirs(save_path)
     pil_img.save(save_path + file_name)
 
-
-def diffusion_step(
-        model, 
-        latents, 
-        context, 
-        t, 
-        guidance_scale, 
-        low_resource=False,
-
-        self_attention_mask=None,
-        cross_attention_mask=None,
-        position_to_use_mask=[],
-        # use_guided_latent=False,
-        latent_mask=None,
-        use_cfg_mask=False, # 决定是否使用latent_mask
-):
-    # TODO 此处使用阶段，默认使用low_resource为False
+def diffusion_step(model, latents, context, t, guidance_scale, low_resource=False):
     if low_resource:
         noise_pred_uncond = model.unet(latents, t, encoder_hidden_states=context[0])["sample"]
         noise_prediction_text = model.unet(latents, t, encoder_hidden_states=context[1])["sample"]
@@ -88,36 +56,14 @@ def diffusion_step(
             latents_input, 
             t, 
             encoder_hidden_states=context,
-
-            self_attention_mask=self_attention_mask,
-            cross_attention_mask=cross_attention_mask,
-            position_to_use_mask=position_to_use_mask,
-
-            # use_guided_latent=use_guided_latent,
-
         )["sample"]
         noise_pred_uncond, noise_prediction_text = noise_pred.chunk(2)
-    if use_cfg_mask and latent_mask is not None:
-        noise_pred_uncond = noise_pred_uncond * (latent_mask) + noise_pred_uncond
-        noise_prediction_text = noise_prediction_text * (~latent_mask) + noise_prediction_text
 
     noise_pred = noise_pred_uncond + guidance_scale * (noise_prediction_text - noise_pred_uncond)
     latents = model.scheduler.step(noise_pred, t, latents)["prev_sample"]
     return latents
 
-
-def diffusion_step_parallel(
-        model, 
-        latents, 
-        context, 
-        t, 
-        guidance_scale, 
-        low_resource=False,
-        latent_mask=None,
-        use_cfg_mask=False, # 决定是否使用latent_mask
-        use_parallel=True
-):
-    # TODO 此处使用阶段，默认使用low_resource为False
+def diffusion_step_parallel(model, latents, context, t, guidance_scale, low_resource=False, use_parallel=True):
     if low_resource:
         noise_pred_uncond = model.unet(latents, t, encoder_hidden_states=context[0])["sample"]
         noise_prediction_text = model.unet(latents, t, encoder_hidden_states=context[1])["sample"]
@@ -127,22 +73,13 @@ def diffusion_step_parallel(
             latents_input, 
             torch.cat([t, t]), 
             encoder_hidden_states=context,
-            # use_parallel控制不对timesteps进行膨胀
             use_parallel=use_parallel,
-
         )["sample"]
         noise_pred_uncond, noise_prediction_text = noise_pred.chunk(2)
-    if use_cfg_mask and latent_mask is not None:
-        noise_pred_uncond = noise_pred_uncond * (latent_mask) + noise_pred_uncond
-        noise_prediction_text = noise_prediction_text * (~latent_mask) + noise_prediction_text
 
     noise_pred = noise_pred_uncond + guidance_scale * (noise_prediction_text - noise_pred_uncond)
-    
-
-
     latents = model.scheduler.step(noise_pred, t, latents, use_parallel=True)["prev_sample"]
     return latents
-
 
 def latent2image(vae, latents):
     latents = 1 / 0.18215 * latents
@@ -151,7 +88,6 @@ def latent2image(vae, latents):
     image = image.cpu().permute(0, 2, 3, 1).detach().numpy()
     image = (image * 255).astype(np.uint8)
     return image
-
 
 def image2latent(vae, image):
     with torch.no_grad():
@@ -166,27 +102,17 @@ def image2latent(vae, image):
             latents = latents * 0.18215
     return latents
 
-def init_latent(latent, model, height, width, generator, batch_size):
-    """
-        随机一个latent空间的噪声，并将噪声按照batch这个维度进行expand
-    """
+def init_latent(latent, model, height, width, batch_size):
     if latent is None:
-        latent = torch.randn(
-            (1, model.unet.in_channels, height // 8, width // 8),
-            generator=generator,
-        )
+        latent = torch.randn((1, model.unet.in_channels, height // 8, width // 8))
     latents = latent.expand(batch_size, model.unet.in_channels, height // 8, width // 8).to(model.device)
     return latent, latents
 
-def init_latent_parallel(latent, model, height, width, generator, batch_size, all_latents, num_ddim_steps):
-    """
-        随机一个latent空间的噪声，并将噪声按照batch这个维度进行expand
-    """
+def init_latent_parallel(latent, model, height, width, batch_size, all_latents, num_ddim_steps):
     latents = all_latents[1]
     for i in range(1, num_ddim_steps // 2):
         latents = torch.cat([latents, all_latents[i + 1]])
     return latent, latents
-
 
 def load_512(image_path, left=0, right=0, top=0, bottom=0):
     if type(image_path) is str:
