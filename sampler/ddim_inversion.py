@@ -133,16 +133,16 @@ class DDIMInversion:
     def reinversion(
             self,
             latent,
+            origin_embedding,
             start,
             reinversion_steps,
     ):
-        uncond_embeddings, cond_embeddings = self.context.chunk(2)
-        cond_embeddings = cond_embeddings.repeat(latent.shape[0], 1, 1) # 和之前的inversion不同，要对每一个样本都设置一个prompt，原来只要一个inverison就可以用到所有的上面
+        origin_embedding = origin_embedding.repeat(latent.shape[0], 1, 1) # 和之前的inversion不同，要对每一个样本都设置一个prompt，原来只要一个inverison就可以用到所有的上面
         latent = latent.clone().detach()
         for i in range(start, start + reinversion_steps):
             t = self.model.scheduler.timesteps[len(self.model.scheduler.timesteps) - i - 1]
             noise_pred = self.get_noise_pred_single(
-                latent, t, cond_embeddings,
+                latent, t, origin_embedding,
             )
             latent = self.next_step(noise_pred, t, latent)
         return latent

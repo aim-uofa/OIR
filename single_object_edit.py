@@ -6,20 +6,11 @@ from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
 from configs.oir_config import (
     ldm_stable, 
-    mask_at_where,
-    unmask_area_recover_method,
-    normalize_method,
-    
-    use_reinversion,
-    reassembly_step,
-    blended_all_step_after_reassembly_step,
-
     NUM_DDIM_STEPS,
     GUIDANCE_SCALE,
     clip_text_path,
 )
 
-from configs.single_object_edit import args
 from utils.candidate_images_generation import candidate_images_generation
 from utils.optimal_candidate_selection import optimal_candidate_selection
 
@@ -32,12 +23,12 @@ sys.path.append("/home/yangzhen/code/DynamicInversion")
 def main(args):
     
     # 0. the basic information of user inputs
-    image_path = args.image_path
-    generation_image_path = args.generation_image_path
-    origin_prompt = args.origin_prompt
-    target_prompt_list = args.target_prompt_list
-    prompt_changes = args.target_changes
-    origin_prompt_mask = args.origin_prompt_mask
+    image_path = args['image_path']
+    generation_image_path = args['generation_image_path']
+    origin_prompt = args['origin_prompt']
+    target_prompt_list = args['target_prompt_list']
+    prompt_changes = args['target_changes']
+    origin_prompt_mask = args['origin_prompt_mask']
         
     # 1. Target prompts preparation
     target_prompts_list = []
@@ -85,7 +76,8 @@ def main(args):
 if __name__ == '__main__':
     with open('configs/single_object_edit.yaml', 'r') as file:
         args = yaml.safe_load(file)
-    main(args)
+    for key in args.keys():
+        main(args[key])
 
 # CUDA_VISIBLE_DEVICES=2 python oir_parallel.py --key multi_object_nice_0107
 

@@ -6,20 +6,13 @@ from diffusers import DDIMScheduler
 from sampler.ddim_scheduling import DDIMScheduler
 from models.autoencoder_kl import AutoencoderKL
 from models.unet_2d_condition import UNet2DConditionModel
-from configs.user_input import args
 
 
 
 # oir config
-mask_at_where = 'latent' # pixel/latent
-unmask_area_recover_method = 'inversion_latent' # inversion_latent/guided_latent
-normalize_method = 'max-min' # z-score
-blended_all_step_after_reassembly_step = False
-use_reinversion = True
-# reassembly_step从1开始，不能为0，就是background_sweet_point
-reassembly_step = 10 # 30 20 10 5 
 clip_text_path = "/home/yangzhen/checkpoints/openai/clip-vit-base-patch16"
 pretrained_model = '/home/yangzhen/checkpoints/huggingface/models/StableDiffusionModels/stable-diffusion-v1-4'
+# TODO 可以将yaml中包含的方法不写了，仅仅写yaml中不包含的代码
 
 
 # ldm config

@@ -14,164 +14,126 @@ import time
 from tqdm import trange
 import os
 
+def change_all_masks_shape(mask, latent):
+    mask = mask.unsqueeze(1).to(latent.device)
+    mask = torch.nn.functional.interpolate(
+        mask.float(),
+        size=(latent.shape[2], latent.shape[3]),
+        mode='nearest',
+    ) > 0.5
+    mask = mask.repeat(1, latent.shape[1], 1, 1).int()
+    return mask
+
 
 @torch.no_grad()
 def oir(
     model,
-    prompt:  List[str],
+    prompts,
+    optimal_inversion_steps,
     num_inference_steps: int = 50,
     guidance_scale: Optional[float] = 7.5,
     latent: Optional[torch.FloatTensor] = None,
     return_type='image',
     all_latents=None,
-    image_mask=None,
+    all_masks=None,
     ddim_inversion=None,
-    use_reinversion=False,
     reinversion_steps=0,
     prompt_changes=[],
-    max_sweet_point=0,
+    max_optimal_inversion_step=0,
     right_to_left_1_point=0,
     reassembly_step=0,
-
+    height=512,
+    width=512,
 ):
+    batch_size = len(prompts)
+    latent, latents = basic_utils.init_latent(latent, model, height, width, batch_size)
+    model.scheduler.set_timesteps(num_inference_steps)
 
-    batch_size = len(prompt)
-    height = width = 512
+    all_latent_masks = {}
+    for key in all_masks.keys():
+        all_latent_masks[key] = change_all_masks_shape(all_masks[key], latents)
     
-    text_input = model.tokenizer(
-        prompt,
-        padding="max_length",
+    # TODO There may be ambiguity in using prompt_change as key!
+    origin_prompt, guided_prompts, target_prompt = prompts[0], prompts[1:-1], prompts[-1]
+    all_embeddings = {}
+    for prompt_change, guided_prompt in zip(prompt_changes, guided_prompts):
+        all_embeddings[prompt_change] = model.tokenizer(
+            [origin_prompt, guided_prompt],
+            padding='max_length',
+            max_length=model.tokenizer.model_max_length,
+            truncation=True,
+            return_tensors="pt",
+        )
+        all_embeddings[prompt_change] = model.text_encoder(all_embeddings[prompt_change].input_ids.to(model.device))[0]
+    target_embedding = model.tokenizer(
+        [origin_prompt, target_prompt],
+        padding='max_length',
         max_length=model.tokenizer.model_max_length,
         truncation=True,
         return_tensors="pt",
     )
-    text_embeddings = model.text_encoder(text_input.input_ids.to(model.device))[0]
-    max_length = text_input.input_ids.shape[-1]
-
-    latent, latents = basic_utils.init_latent(latent, model, height, width, batch_size)
-    model.scheduler.set_timesteps(num_inference_steps)
-
-    latent_mask = {}
-    if image_mask is not None:
-        
-        latent_mask['right_to_left_1_point'] = image_mask['right_to_left_1_point'].unsqueeze(1).to(latents.device)
-        latent_mask['right_to_left_1_point'] = torch.nn.functional.interpolate(
-                latent_mask['right_to_left_1_point'].float(), 
-                size=(latents.shape[2], latents.shape[3]),
-                mode="nearest",
-            ) > 0.5
-        latent_mask['right_to_left_1_point'] = latent_mask['right_to_left_1_point'].repeat(1, latents.shape[1], 1, 1).int()   
-
-        latent_mask['reassembly_step'] = image_mask['reassembly_step'].unsqueeze(1).to(latents.device)
-        latent_mask['reassembly_step'] = torch.nn.functional.interpolate(
-                latent_mask['reassembly_step'].float(), 
-                size=(latents.shape[2], latents.shape[3]),
-                mode="nearest",
-            ) > 0.5
-        latent_mask['reassembly_step'] = latent_mask['reassembly_step'].repeat(1, latents.shape[1], 1, 1).int()   
-
-        latent_mask[prompt_changes[0]] = image_mask[prompt_changes[0]].unsqueeze(1).to(latents.device)
-        latent_mask[prompt_changes[0]] = torch.nn.functional.interpolate(
-                latent_mask[prompt_changes[0]].float(), 
-                size=(latents.shape[2], latents.shape[3]),
-                mode="nearest",
-            ) > 0.5
-        latent_mask[prompt_changes[0]] = latent_mask[prompt_changes[0]].repeat(1, latents.shape[1], 1, 1).int()  
-
-        latent_mask[prompt_changes[1]] = image_mask[prompt_changes[1]].unsqueeze(1).to(latents.device)
-        latent_mask[prompt_changes[1]] = torch.nn.functional.interpolate(
-                latent_mask[prompt_changes[1]].float(), 
-                size=(latents.shape[2], latents.shape[3]),
-                mode="nearest",
-            ) > 0.5
-        latent_mask[prompt_changes[1]] = latent_mask[prompt_changes[1]].repeat(1, latents.shape[1], 1, 1).int()  
-
-        latent_mask['background'] = image_mask['background'].unsqueeze(1).to(latents.device)
-        latent_mask['background'] = torch.nn.functional.interpolate(
-                latent_mask['background'].float(), 
-                size=(latents.shape[2], latents.shape[3]),
-                mode="nearest",
-            ) > 0.5
-        latent_mask['background'] = latent_mask['background'].repeat(1, latents.shape[1], 1, 1).int()  
-        
-
-    for i, t in enumerate(tqdm(model.scheduler.timesteps[-max_sweet_point:])):
-        
-        num_of_timesteps = len(model.scheduler.timesteps[-max_sweet_point:])
-        right_to_left_1_point_area_latent_save_point_denoise_axis = num_of_timesteps - right_to_left_1_point
-        reassembly_step_area_latent_save_point_denoise_axis = num_of_timesteps - reassembly_step
-        
-        context = torch.cat([text_embeddings[0].unsqueeze(0).repeat(text_embeddings.shape[0], 1, 1), text_embeddings])
-
-        latents = basic_utils.diffusion_step(model, latents, context, t, guidance_scale, low_resource=False)
-
-
-        if i == right_to_left_1_point_area_latent_save_point_denoise_axis:
-            latents[1, :, :, :] = all_latents[right_to_left_1_point]
-
-        if i == reassembly_step_area_latent_save_point_denoise_axis:
-            latents = replace_2_inversion_unmask_area_to_denoise_unmask_area(
-                model,
-                i,
-                latents,
-                all_latents,
-                latent_mask,
-                reassembly_step,
-                reassembly_step_area_latent_save_point_denoise_axis,
-                prompt_changes,
-            )
-            if use_reinversion:
-                latents = reinversion_and_denoise(
-                    model,
-                    latents,
-                    context,
-                    ddim_inversion,
-                    reinversion_steps,
-                    reassembly_step,
-                    guidance_scale,
-                    latent_mask,
-                )
-
-    image = basic_utils.latent2image(model.vae, latents) if return_type == 'image' else latents
-    return image, latent
-
-def replace_2_inversion_unmask_area_to_denoise_unmask_area(
+    target_embedding = model.text_encoder(target_embedding.input_ids.to(model.device))[0]
+    
+    origin_embedding = model.tokenizer(
+        [origin_prompt],
+        padding='max_length',
+        max_length=model.tokenizer.model_max_length,
+        truncation=True,
+        return_tensors="pt",
+    )
+    origin_embedding = model.text_encoder(origin_embedding.input_ids.to(model.device))[0]
+    
+    guided_latents = {}
+    for prompt_change in prompt_changes:
+        context = all_embeddings[prompt_change]
+        latent = all_latents[optimal_inversion_steps[prompt_change]]
+        timesteps = model.scheduler.timesteps[-(optimal_inversion_steps[prompt_change]):]
+        stop_for_reassembly = len(timesteps) - reassembly_step
+        for i, t in enumerate(tqdm(timesteps)):
+            latent = basic_utils.diffusion_step(model, latent, context, t, guidance_scale, low_resource=False)
+            if i == stop_for_reassembly - 1:
+                guided_latents[prompt_change] = latent
+                break
+        # Image.fromarray(basic_utils.latent2image(model.vae, latent).squeeze(0), 'RGB').save(prompt_change + '.png')
+    
+    # crop editing region and non-editing region, and use them to contruct reassembly latent
+    reassembly_latent = all_masks['non_editing_region_mask'] * all_latents[reassembly_step]
+    for prompt_change in prompt_changes:
+        reassembly_latent += all_latent_masks[prompt_change] * guided_latents[prompt_change]        
+    
+    # use re-inversion and change prompt to target prompt to guided denoising process.
+    reassembly_latent = reinversion_and_denoise(
         model,
-        i,
-        latents,
-        all_latents,
-        latent_mask,
-        unmask_area_latent_save_point,
-        unmask_area_latent_save_point_denoise_axis,
-        prompt_changes,
+        reassembly_latent,
+        target_embedding,
+        origin_embedding,
+        ddim_inversion,
+        reinversion_steps,
+        reassembly_step,
+        guidance_scale,
+    )
+    image = basic_utils.latent2image(model.vae, reassembly_latent) if return_type == 'image' else latents
+    return image, reassembly_latent
 
-):
-    cat_latents = latents[1].unsqueeze(0) * latent_mask[prompt_changes[0]]
-    cake_latents = latents[2].unsqueeze(0) * latent_mask[prompt_changes[1]]
-    background_latents = all_latents[unmask_area_latent_save_point] * latent_mask['background']
-    cat_cake_background_latents = cat_latents + cake_latents + background_latents
-    latents[3, :, :, :] = cat_cake_background_latents
-    return latents
 
+
+
+         
 
 def reinversion_and_denoise(
         model,
-        latents,
-        context,
+        reassembly_latent,
+        target_embedding,
+        origin_embedding,
         ddim_inversion,
         reinversion_steps,
-        unmask_area_latent_save_point,
+        reassembly_step,
         guidance_scale,
-        latent_mask,
 ):
-    latents = ddim_inversion.reinversion(latents, unmask_area_latent_save_point, reinversion_steps)
-    for t in model.scheduler.timesteps[-(reinversion_steps + unmask_area_latent_save_point): -unmask_area_latent_save_point]:
-        latents = basic_utils.diffusion_step(model, latents, context, t, guidance_scale, low_resource=False,)
-    return latents
-        
+    reassembly_latent = ddim_inversion.reinversion(reassembly_latent, origin_embedding, reassembly_step, reinversion_steps)
+    for t in model.scheduler.timesteps[-(reinversion_steps + reassembly_step):]:
+        reassembly_latent = basic_utils.diffusion_step(model, reassembly_latent, target_embedding, t, guidance_scale, low_resource=False)
+    return reassembly_latent
 
-    
-    # if verbose:
-    #     basic_utils.view_images(images, save_path=save_path, file_name=file_name)
-    # return images, x_t
+
 
