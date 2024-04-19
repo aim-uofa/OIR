@@ -33,6 +33,9 @@
 
 <!-- <p align="center"><b>We will release the code soon!</b></p> -->
 
+## Setup
+This code was tested with Python 3.9, Pytorch 2.0.1 using pre-trained models through huggingface / diffusers. Specifically, we implemented our method over Stable Diffusion 1.4. Additional required packages are listed in the requirements file. The code was tested on a NVIDIA GeForce RTX 3090 but should work on other cards.
+
 ## Getting Started
 1. Download OIR-Bench.
 2. 
