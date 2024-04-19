@@ -16,7 +16,6 @@ from utils.optimal_candidate_selection import optimal_candidate_selection
 
 from sampler.ddim_inversion import DDIMInversion
 from sampler.oir_denoise import dynamic_run_and_display
-sys.path.append("/home/yangzhen/code/DynamicInversion")
 
 
 
@@ -41,7 +40,7 @@ def main(args):
     all_latents = ddim_inversion.invert(image_path, origin_prompt)
     end = time.time()
     
-    # 3. collect all candidate images, and save it into the file
+    # 3. collect all candidate images
     print('Candidate images generation ...')
     candidate_images = {}
     for target_prompt, prompt_change in zip(target_prompts_list, prompt_changes):
@@ -78,6 +77,4 @@ if __name__ == '__main__':
         args = yaml.safe_load(file)
     for key in args.keys():
         main(args[key])
-
-# CUDA_VISIBLE_DEVICES=2 python oir_parallel.py --key multi_object_nice_0107
 

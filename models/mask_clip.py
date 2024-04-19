@@ -20,8 +20,6 @@ from transformers.models.clip.modeling_clip import (
 import os
 from tqdm import tqdm
 import sys
-sys.path.append("/home/yangzhen/code/DynamicInversion")
-from grounded_sam.grounded_sam import generate_mask, change_mask_to_attention_mask
 import matplotlib.pyplot as plt
 
 

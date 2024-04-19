@@ -26,11 +26,9 @@ def view_images(images, save_path, file_name, num_rows=1, offset_ratio=0.02):
     else:
         images = [images]
         num_empty = 0
-
     empty_images = np.ones(images[0].shape, dtype=np.uint8) * 255
     images = [image.astype(np.uint8) for image in images] + [empty_images] * num_empty
     num_items = len(images)
-
     h, w, c = images[0].shape
     offset = int(h * offset_ratio)
     num_cols = num_items // num_rows
@@ -40,7 +38,6 @@ def view_images(images, save_path, file_name, num_rows=1, offset_ratio=0.02):
         for j in range(num_cols):
             image_[i * (h + offset): i * (h + offset) + h:, j * (w + offset): j * (w + offset) + w] = images[
                 i * num_cols + j]
-
     pil_img = Image.fromarray(image_)
     if not os.path.isdir(save_path):
         os.makedirs(save_path)
@@ -58,7 +55,6 @@ def diffusion_step(model, latents, context, t, guidance_scale, low_resource=Fals
             encoder_hidden_states=context,
         )["sample"]
         noise_pred_uncond, noise_prediction_text = noise_pred.chunk(2)
-
     noise_pred = noise_pred_uncond + guidance_scale * (noise_prediction_text - noise_pred_uncond)
     latents = model.scheduler.step(noise_pred, t, latents)["prev_sample"]
     return latents

@@ -1,5 +1,4 @@
 import sys
-sys.path.append("/home/yangzhen/code/DynamicInversion")
 import torch
 from diffusers import StableDiffusionPipeline
 from diffusers import DDIMScheduler
@@ -9,11 +8,11 @@ from models.unet_2d_condition import UNet2DConditionModel
 
 
 
-# oir config
+# model config
+# path to text CLIP 
 clip_text_path = "/home/yangzhen/checkpoints/openai/clip-vit-base-patch16"
+# path to Stable Diffusion
 pretrained_model = '/home/yangzhen/checkpoints/huggingface/models/StableDiffusionModels/stable-diffusion-v1-4'
-# TODO 可以将yaml中包含的方法不写了，仅仅写yaml中不包含的代码
-
 
 # ldm config
 NUM_DDIM_STEPS = 50

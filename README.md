@@ -31,7 +31,11 @@
 </p>
 
 
-<p align="center"><b>We will release the code soon!</b></p>
+<!-- <p align="center"><b>We will release the code soon!</b></p> -->
+
+## Getting Started
+1. Download OIR-Bench.
+2. 
 
 
 ## Results
@@ -40,9 +44,9 @@
 <p align="center">
   <table align="center">
     <td>
-      <img src="./imgs/OIR_result_1.png"></img>
-      <img src="./imgs/OIR_result_2.png"></img>
-      <img src="./imgs/OIR_result_3.png"></img>
+      <img src="./assets/OIR_result_1.png"></img>
+      <img src="./assets/OIR_result_2.png"></img>
+      <img src="./assets/OIR_result_3.png"></img>
     </td>
   </table>
 </p>
@@ -51,8 +55,8 @@
 <p align="center">
   <table align="center">
     <td>
-      <img src="./imgs/search_metric_1.png"></img>
-      <img src="./imgs/search_metric_2.png"></img>
+      <img src="./assets/search_metric_1.png"></img>
+      <img src="./assets/search_metric_2.png"></img>
     </td>
   </table>
 </p>

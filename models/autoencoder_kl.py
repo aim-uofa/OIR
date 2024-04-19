@@ -23,7 +23,6 @@ from diffusers.models.modeling_utils import ModelMixin
 
 
 import sys
-sys.path.append("/home/yangzhen/code/DynamicInversion")
 from models.vae import Decoder, DecoderOutput, DiagonalGaussianDistribution, Encoder
 
 

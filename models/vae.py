@@ -21,7 +21,6 @@ import torch.nn as nn
 from diffusers.utils import BaseOutput, randn_tensor
 
 import sys
-sys.path.append("/home/yangzhen/code/DynamicInversion")
 from models.unet_2d_blocks import UNetMidBlock2D, get_down_block, get_up_block
 
 

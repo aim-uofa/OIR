@@ -25,7 +25,6 @@ from diffusers.models.resnet import Downsample2D, FirDownsample2D, FirUpsample2D
 # from diffusers.models.transformer_2d import Transformer2DModel
 
 import sys
-sys.path.append("/home/yangzhen/code/DynamicInversion")
 from models.transformer_2d import Transformer2DModel
 from models.attention_processor import Attention, AttnAddedKVProcessor, AttnAddedKVProcessor2_0
 from models.attention import AdaGroupNorm, AttentionBlock

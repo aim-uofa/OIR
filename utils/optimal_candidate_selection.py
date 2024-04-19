@@ -7,7 +7,6 @@ import torch.nn.functional as F
 from models.mask_clip import MaskCLIPModel
 from torchmetrics.multimodal import CLIPScore
 from transformers import AutoProcessor, CLIPModel, AutoTokenizer
-sys.path.append("/home/yangzhen/code/DynamicInversion")
 
 
 def change_mask_to_attention_mask(mask, patch_size=16, image_size=224, use_cls_token=True):

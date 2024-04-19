@@ -1,32 +1,3 @@
-# multi_object:
-#   image_path: "OIR-Bench/multi_object/dataset/multi_object_010.png"
-#   origin_prompt: "a small house in the middle of a grassy field and a row of tables to its right" 
-#   target_prompt: "a small church in the middle of a grassy field and a tank to its right"
-#   guided_prompt: [["a small ", " in the middle of a grassy field and a row of tables to its right"], ["a small house in the middle of a grassy field and ", " to its right"]]
-#   origin_change: ['house', 'a row of tables']
-#   prompt_change: ['church', 'a tank']
-#   prompt_change_mask: ['OIR-Bench/multi_object/mask/multi_object_010/house.png', 'OIR-Bench/multi_object/mask/multi_object_010/a row of tables.png']
-#   reassembly_step: 10
-#   reinversion_steps: 16
-#   generation_image_path: "multi_object_edit_results/"
-
-
-
-
-# multi_object:
-#   image_path: "OIR-Bench/multi_object/dataset/multi_object_013.png"
-#   origin_prompt: "a starfish lying on the beach with foam on its left side"
-#   target_prompt: "a stuffed toy starfish lying on the beach with chequered blanket on its left side"
-#   guided_prompt: [["a ", " lying on the beach with foam on its left side"], ["a starfish lying on the beach with ", " on its left side"]]
-#   origin_change: ['starfish', 'foam']
-#   prompt_change: ['stuffed toy starfish', 'chequered blanket']
-#   prompt_change_mask: ['OIR-Bench/multi_object/mask/multi_object_013/foam.png', 'OIR-Bench/multi_object/mask/multi_object_013/starfish.png']
-#   reassembly_step: 10
-#   reinversion_steps: 15
-#   generation_image_path: "multi_object_edit_results/"
-
-
-
 multi_object:
   image_path: "OIR-Bench/multi_object/dataset/multi_object_009.png"
   origin_prompt: "a bowl of dumplings on the left and chopsticks on the right"

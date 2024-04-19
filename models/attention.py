@@ -22,7 +22,6 @@ from diffusers.utils.import_utils import is_xformers_available
 from diffusers.models.embeddings import CombinedTimestepLabelEmbeddings
 
 import sys
-sys.path.append("/home/yangzhen/code/DynamicInversion")
 from models.attention_processor import Attention
 
 

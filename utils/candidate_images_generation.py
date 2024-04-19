@@ -13,8 +13,6 @@ import time
 from tqdm import trange
 import os
 
-
-
 @torch.no_grad()
 def candidate_images_generation(
     model,

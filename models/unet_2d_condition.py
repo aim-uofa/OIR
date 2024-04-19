@@ -27,7 +27,6 @@ from diffusers.models.embeddings import GaussianFourierProjection, TextTimeEmbed
 from diffusers.models.modeling_utils import ModelMixin
 
 import sys
-sys.path.append("/home/yangzhen/code/DynamicInversion")
 from models.unet_2d_blocks import (
     CrossAttnDownBlock2D,
     CrossAttnUpBlock2D,

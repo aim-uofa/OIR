@@ -16,15 +16,12 @@ from utils.optimal_candidate_selection import optimal_candidate_selection
 from utils.oir import oir
 
 from sampler.ddim_inversion import DDIMInversion
-sys.path.append("/home/yangzhen/code/DynamicInversion")
-
 
 
 def main(args):
 
     # 0. the basic information of user inputs
     image_path = args['image_path']
-    generation_image_path = 'results'
     origin_prompt = args['origin_prompt']
     target_prompt = args['target_prompt']
     guided_prompts = args['guided_prompt']
@@ -33,6 +30,7 @@ def main(args):
     prompt_changes_mask = args['prompt_change_mask']
     reassembly_step = args['reassembly_step']
     reinversion_steps = args['reinversion_steps']
+    generation_image_path = args['generation_image_path']
     
     # 1. Guided prompts preparation
     guided_prompts_list, prompts = [], [origin_prompt]
@@ -86,6 +84,7 @@ def main(args):
         all_masks['all_editing_region_mask'] += all_masks[prompt_change]
 
     # 6. implement OIR
+    print('OIR ...')
     max_optimal_inversion_step = optimal_inversion_steps[prompt_changes[-1]]
     right_to_left_1_point = optimal_inversion_steps[prompt_changes[0]]
     x_t = all_latents[max_optimal_inversion_step]
@@ -109,8 +108,9 @@ def main(args):
         prompt_changes=prompt_changes,
     )
     
-
-    Image.fromarray(images.squeeze(0), 'RGB').save('output_image.png')
+    if not os.path.exists(generation_image_path):
+        os.makedirs(generation_image_path)
+    Image.fromarray(images.squeeze(0)).save(os.path.join(generation_image_path, target_prompt + '.png'))
 
 
 

@@ -24,7 +24,6 @@ def change_all_masks_shape(mask, latent):
     mask = mask.repeat(1, latent.shape[1], 1, 1).int()
     return mask
 
-
 @torch.no_grad()
 def oir(
     model,
