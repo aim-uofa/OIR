@@ -94,10 +94,9 @@ def oir(
             if i == stop_for_reassembly - 1:
                 guided_latents[prompt_change] = latent
                 break
-        # Image.fromarray(basic_utils.latent2image(model.vae, latent).squeeze(0), 'RGB').save(prompt_change + '.png')
     
     # crop editing region and non-editing region, and use them to contruct reassembly latent
-    reassembly_latent = all_masks['non_editing_region_mask'] * all_latents[reassembly_step]
+    reassembly_latent = all_latent_masks['non_editing_region_mask'] * all_latents[reassembly_step]
     for prompt_change in prompt_changes:
         reassembly_latent += all_latent_masks[prompt_change] * guided_latents[prompt_change]        
     
@@ -114,11 +113,6 @@ def oir(
     )
     image = basic_utils.latent2image(model.vae, reassembly_latent) if return_type == 'image' else latents
     return image, reassembly_latent
-
-
-
-
-         
 
 def reinversion_and_denoise(
         model,

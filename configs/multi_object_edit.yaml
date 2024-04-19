@@ -13,14 +13,28 @@
 
 
 
+# multi_object:
+#   image_path: "OIR-Bench/multi_object/dataset/multi_object_013.png"
+#   origin_prompt: "a starfish lying on the beach with foam on its left side"
+#   target_prompt: "a stuffed toy starfish lying on the beach with chequered blanket on its left side"
+#   guided_prompt: [["a ", " lying on the beach with foam on its left side"], ["a starfish lying on the beach with ", " on its left side"]]
+#   origin_change: ['starfish', 'foam']
+#   prompt_change: ['stuffed toy starfish', 'chequered blanket']
+#   prompt_change_mask: ['OIR-Bench/multi_object/mask/multi_object_013/foam.png', 'OIR-Bench/multi_object/mask/multi_object_013/starfish.png']
+#   reassembly_step: 10
+#   reinversion_steps: 15
+#   generation_image_path: "multi_object_edit_results/"
+
+
+
 multi_object:
-  image_path: "OIR-Bench/multi_object/dataset/multi_object_013.png"
-  origin_prompt: "a starfish lying on the beach with foam on its left side"
-  target_prompt: "a stuffed toy starfish lying on the beach with chequered blanket on its left side"
-  guided_prompt: [["a ", " lying on the beach with foam on its left side"], ["a starfish lying on the beach with ", " on its left side"]]
-  origin_change: ['starfish', 'foam']
-  prompt_change: ['stuffed toy starfish', 'chequered blanket']
-  prompt_change_mask: ['OIR-Bench/multi_object/mask/multi_object_013/foam.png', 'OIR-Bench/multi_object/mask/multi_object_013/starfish.png']
+  image_path: "OIR-Bench/multi_object/dataset/multi_object_009.png"
+  origin_prompt: "a bowl of dumplings on the left and chopsticks on the right"
+  target_prompt: "a bowl of fry rice on the left and knife on the right"
+  guided_prompt: [["a bowl of ", " on the left and chopsticks on the right"], ["a bowl of dumplings on the left and ", " on the right"]]
+  origin_change: ['dumplings', 'chopsticks']
+  prompt_change: ['fry rice', 'knife']
+  prompt_change_mask: ['OIR-Bench/multi_object/mask/multi_object_009/dumplings.png', 'OIR-Bench/multi_object/mask/multi_object_009/chopsticks.png']
   reassembly_step: 10
-  reinversion_steps: 15
+  reinversion_steps: 10
   generation_image_path: "multi_object_edit_results/"
