@@ -9,7 +9,7 @@ import utils.basic_utils as basic_utils
 import shutil
 from torch.optim.adam import Adam
 from PIL import Image
-from configs.oir_config import GUIDANCE_SCALE, device, NUM_DDIM_STEPS, ldm_stable
+from configs.basic_config import GUIDANCE_SCALE, device, NUM_DDIM_STEPS, ldm_stable
 import time
 from tqdm import trange
 import os

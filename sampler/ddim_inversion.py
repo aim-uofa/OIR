@@ -8,7 +8,7 @@ import torch, abc, shutil, time, os
 import utils.basic_utils as basic_utils
 from sampler.ddim_scheduling import DDIMScheduler
 from typing import Optional, Union, Tuple, List, Callable, Dict
-from configs.oir_config import GUIDANCE_SCALE, device, NUM_DDIM_STEPS, ldm_stable
+from configs.basic_config import GUIDANCE_SCALE, device, NUM_DDIM_STEPS, ldm_stable
 
 
 class DDIMInversion:

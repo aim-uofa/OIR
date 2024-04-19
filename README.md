@@ -38,8 +38,15 @@ This code was tested with Python 3.9, Pytorch 2.0.1 using pre-trained models thr
 
 ## Getting Started
 1. Download OIR-Bench.
-2. 
-
+2. Create the environment and install the dependencies by running:
+```
+conda create -n oir python=3.9
+conda activate oir
+pip install -r requirements.txt
+```
+3. Change the *basic_config.py* in the *configs*, input the correct model address and hyperparameters.
+4. Modify *multi_object_edit.yaml* or *single_object_edit.yaml* in the configs directory according to *multi_object.yaml* and *single_object.yaml* in OIR-Bench.
+5. Run *single_object_edit.py* (Search Metric in paper) or *multi_object_edit.py* (OIR in paper) to implement image editing.
 
 ## Results
 

@@ -4,7 +4,7 @@ import numpy as np
 from PIL import Image
 from tqdm.notebook import tqdm
 import matplotlib.pyplot as plt
-from configs.oir_config import (
+from configs.basic_config import (
     ldm_stable, 
     NUM_DDIM_STEPS,
     GUIDANCE_SCALE,
