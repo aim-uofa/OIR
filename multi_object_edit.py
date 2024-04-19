@@ -1,5 +1,4 @@
 import sys, torch, os, cv2, yaml, shutil, argparse, time
-
 import numpy as np
 from PIL import Image
 from tqdm.notebook import tqdm
@@ -14,9 +13,7 @@ from utils.basic_utils import change_images_to_file
 from utils.candidate_images_generation import candidate_images_generation
 from utils.optimal_candidate_selection import optimal_candidate_selection
 from utils.oir import oir
-
 from sampler.ddim_inversion import DDIMInversion
-
 
 def main(args):
 
@@ -112,17 +109,9 @@ def main(args):
         os.makedirs(generation_image_path)
     Image.fromarray(images.squeeze(0)).save(os.path.join(generation_image_path, target_prompt + '.png'))
 
-
-
-    
-    
-
-
 if __name__ == '__main__':
     with open('configs/multi_object_edit.yaml', 'r') as file:
         args = yaml.safe_load(file)
     for key in args.keys():
         main(args[key])
-
-# CUDA_VISIBLE_DEVICES=2 python oir_parallel.py --key multi_object_nice_0107
 
