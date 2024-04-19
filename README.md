@@ -59,8 +59,8 @@ pip install -r requirements.txt
   <table align="center">
     <td>
       <img src="./assets/OIR_result_1.png"></img>
-      <img src="./assets/OIR_result_2.png"></img>
-      <img src="./assets/OIR_result_3.png"></img>
+      <!-- <img src="./assets/OIR_result_2.png"></img>
+      <img src="./assets/OIR_result_3.png"></img> -->
     </td>
   </table>
 </p>
@@ -70,7 +70,7 @@ pip install -r requirements.txt
   <table align="center">
     <td>
       <img src="./assets/search_metric_1.png"></img>
-      <img src="./assets/search_metric_2.png"></img>
+      <!-- <img src="./assets/search_metric_2.png"></img> -->
     </td>
   </table>
 </p>
