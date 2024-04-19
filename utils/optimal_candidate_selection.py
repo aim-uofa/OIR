@@ -95,7 +95,7 @@ def optimal_candidate_selection(
 ):
     origin_image = np.array(Image.open(origin_image_path))
     editing_region_mask = torch.from_numpy(np.where(np.array(Image.open(editing_region_mask_path)) >= 1, 1, 0))
-    # default setting: different editing pairs' masks don't have overlap
+    # !!! default setting: different editing pairs' masks don't have overlap
     all_masks[target_prompt_change] = editing_region_mask.unsqueeze(0)
     all_masks['non_editing_region_mask'] -= editing_region_mask.unsqueeze(0)
     

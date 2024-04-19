@@ -8,4 +8,4 @@ multi_object:
   prompt_change_mask: ['OIR-Bench/multi_object/mask/multi_object_009/dumplings.png', 'OIR-Bench/multi_object/mask/multi_object_009/chopsticks.png']
   reassembly_step: 10
   reinversion_steps: 10
-  generation_image_path: "multi_object_edit_results/"
+  generation_image_path: "multi_object_results/"

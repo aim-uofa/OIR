@@ -1,12 +1,9 @@
-import sys
 import torch
 from diffusers import StableDiffusionPipeline
 from diffusers import DDIMScheduler
 from sampler.ddim_scheduling import DDIMScheduler
 from models.autoencoder_kl import AutoencoderKL
 from models.unet_2d_condition import UNet2DConditionModel
-
-
 
 # model config
 # path to text CLIP 
