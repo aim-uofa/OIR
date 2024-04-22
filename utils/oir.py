@@ -26,21 +26,19 @@ def oir(
     optimal_inversion_steps,
     num_inference_steps: int = 50,
     guidance_scale: Optional[float] = 7.5,
-    latent: Optional[torch.FloatTensor] = None,
+    x_t: Optional[torch.FloatTensor] = None,
     return_type='image',
     all_latents=None,
     all_masks=None,
     ddim_inversion=None,
     reinversion_steps=0,
     prompt_changes=[],
-    max_optimal_inversion_step=0,
-    right_to_left_1_point=0,
     reassembly_step=0,
     height=512,
     width=512,
 ):
     batch_size = len(prompts)
-    latent, latents = basic_utils.init_latent(latent, model, height, width, batch_size)
+    latent, latents = basic_utils.init_latent(x_t, model, height, width, batch_size)
     model.scheduler.set_timesteps(num_inference_steps)
 
     all_latent_masks = {}

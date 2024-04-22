@@ -83,24 +83,18 @@ def main(args):
     # 6. implement OIR
     print('OIR ...')
     max_optimal_inversion_step = optimal_inversion_steps[prompt_changes[-1]]
-    right_to_left_1_point = optimal_inversion_steps[prompt_changes[0]]
     x_t = all_latents[max_optimal_inversion_step]
     images, x_t = oir(
         ldm_stable, 
         prompts, 
         optimal_inversion_steps=optimal_inversion_steps,
-        latent=x_t, 
+        x_t=x_t, 
         num_inference_steps=NUM_DDIM_STEPS, 
         guidance_scale=GUIDANCE_SCALE, 
-
         all_latents=all_latents,
         all_masks=all_masks,
-
         ddim_inversion=ddim_inversion,
         reinversion_steps=reinversion_steps,
-
-        max_optimal_inversion_step=max_optimal_inversion_step,
-        right_to_left_1_point=right_to_left_1_point,
         reassembly_step=reassembly_step,
         prompt_changes=prompt_changes,
     )
