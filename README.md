@@ -47,6 +47,7 @@ pip install -r requirements.txt
 3. Change the **basic_config.py** in **configs/**, change the model path and hyperparameters.
 4. Modify **multi_object_edit.yaml** or **single_object_edit.yaml** in **configs/** according to **multi_object.yaml** and **single_object.yaml** in **OIR-Bench/**.
 5. Run **single_object_edit.py** (Search Metric in paper) or **multi_object_edit.py** (OIR in paper) to implement image editing.
+6. **Option**: Adjust **reassembly_step** and repeat the above process to get better results.
 
 ## TODO
 1. Use prompt_change as dict's key may lead to error.
