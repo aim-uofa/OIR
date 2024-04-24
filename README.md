@@ -52,6 +52,9 @@ pip install -r requirements.txt
 ## TODO
 1. Use prompt_change as dict's key may lead to error.
 2. Different editing pairs' masks mustn't have overlap.
+3. Search metric can be an ensemble learning tool. For example, we can use pnp, p2p, OIR ... method to edit an image and we can use search metric to select the optimal editing result.
+4. We can also use the method in TODO 3 to build a high quality dataset to train instruct-based image editing method.
+5. Deploy our method on different foundation model (SDXL, LCM ...)
 
 ## Results
 
