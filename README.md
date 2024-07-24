@@ -22,11 +22,13 @@
     <br>
     </br>
         <a href="https://arxiv.org/abs/2310.12149">
-        <img src='https://img.shields.io/badge/arxiv-OIR-blue' alt='Paper PDF'></a>
+        <img src='https://img.shields.io/badge/Arxiv-OIR-blue' alt='Paper PDF'></a>
         <a href="https://aim-uofa.github.io/OIR-Diffusion/">
         <img src='https://img.shields.io/badge/Project-Website-orange' alt='Project Page'></a>
         <a href="https://drive.google.com/file/d/1JX8w0S9PCD9Ipmo9IiICO8R7e1haTGdF/view?usp=sharing">
         <img src='https://img.shields.io/badge/Dataset-OIR--Bench-green' alt='OIR-Bench'></a>
+        <a href="https://iclr.cc/virtual/2024/poster/18242">
+        <img src='https://img.shields.io/badge/Video-ICLR-yellow' alt='Video'></a>
   </p>
 </p>
 
