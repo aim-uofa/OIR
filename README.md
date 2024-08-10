@@ -86,6 +86,13 @@ pip install -r requirements.txt
 ## Acknowlegment
 Many thanks for the generous help in building the project website from Minghan Li.
 
+## License
+For non-commercial academic use, this project is licensed under [the 2-clause BSD License](https://opensource.org/license/bsd-2-clause). 
+For commercial use, please contact [Chunhua Shen](chhshen@gmail.com).
+
+
+
+
 ## Citing
 If you find our work useful, please consider citing:
 
