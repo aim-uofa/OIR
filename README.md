@@ -98,11 +98,12 @@ If you find our work useful, please consider citing:
 
 
 ```BibTeX
-@article{yang2023OIR,
-  title={Object-aware Inversion and Reassembly for Image Editing},
-  author={Yang, Zhen and Ding, Ganggui and Wang, Wen and Chen, Hao and Zhuang, Bohan and Shen, Chunhua},
-  publisher={arXiv preprint arXiv:2310.12149},
-  year={2023},
+@inproceedings{yang2024objectaware,
+title     = {Object-Aware Inversion and Reassembly for Image Editing},
+author    = {Zhen Yang and Ganggui Ding and Wen Wang and Hao Chen and Bohan Zhuang and Chunhua Shen},
+booktitle = {The Twelfth International Conference on Learning Representations},
+year      = {2024},
+url       = {https://openreview.net/forum?id=dpcVXiMlcv}
 }
 ```
 
