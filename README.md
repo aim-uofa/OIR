@@ -93,10 +93,7 @@ For commercial use, please contact [Chunhua Shen](mailto:chhshen@gmail.com).
 
 
 
-## Citing
-If you find our work useful, please consider citing:
-
-
+## BibTeX
 ```BibTeX
 @inproceedings{yang2024objectaware,
 title     = {Object-Aware Inversion and Reassembly for Image Editing},
